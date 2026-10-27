@@ -59,3 +59,171 @@
     border-top: 1px solid #dadada;
     background-color: var(--background-color);
 }
+
+main .accordion.recipes {
+  --grocery-green: #2e7d32;
+  --grocery-green-dark: #1b5e20;
+  --grocery-green-light: #66a86a;
+  --grocery-cream: #fff8e7;
+  --grocery-border: #d9ead9;
+}
+
+/* stylelint-disable no-descending-specificity */
+main .accordion.recipes details {
+  border: 1px solid var(--grocery-border);
+  border-radius: 16px;
+  background-color: #fff;
+  overflow: hidden;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+main .accordion.recipes details + details {
+  margin-top: 12px;
+}
+
+main .accordion.recipes details[open] {
+  border-color: var(--grocery-green-light);
+  background-color: var(--grocery-cream);
+}
+
+main .accordion.recipes details summary {
+  padding: 18px 72px 18px 24px;
+}
+
+main .accordion.recipes details summary:hover,
+main .accordion.recipes details summary:focus,
+main .accordion.recipes details[open] summary {
+  background-color: transparent;
+}
+
+main .accordion.recipes details summary p {
+  margin: 0;
+}
+
+main .accordion.recipes details summary p:first-child {
+  font: var(--type-headline-2-strong-font);
+  color: var(--grocery-green-dark);
+}
+
+main .accordion.recipes details summary p + p {
+  margin-top: 4px;
+  font: var(--type-body-2-default-font);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+}
+
+main .accordion.recipes details summary::after {
+  content: '';
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--grocery-green);
+  background-image: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 14px 2px, 2px 14px;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease, background-color 0.2s;
+}
+
+main .accordion.recipes details summary:hover::after {
+  background-color: var(--grocery-green-dark);
+}
+
+main .accordion.recipes details[open] summary::after {
+  transform: translateY(-50%) rotate(45deg);
+}
+
+main .accordion.recipes details .accordion-item-body,
+main .accordion.recipes details[open] .accordion-item-body {
+  display: grid;
+  gap: 4px 24px;
+  padding: 0 24px 24px;
+  border-top: 0;
+  background-color: transparent;
+}
+
+main .accordion.recipes details[open] .accordion-item-body {
+  animation: grocery-recipe-open 0.3s ease;
+}
+/* stylelint-enable no-descending-specificity */
+
+main .accordion.recipes .accordion-item-body > p:first-child {
+  margin: 0 0 12px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .accordion.recipes .accordion-item-body > p {
+  margin: 0 0 8px;
+}
+
+main .accordion.recipes .accordion-item-body > p > strong {
+  font: var(--type-body-2-strong-font);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--grocery-green);
+}
+
+main .accordion.recipes .accordion-item-body img {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1 / 1;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #fff;
+  object-fit: contain;
+}
+
+main .accordion.recipes .accordion-item-body ul {
+  margin: 0 0 12px;
+  padding-left: 22px;
+}
+
+main .accordion.recipes .accordion-item-body li::marker {
+  content: '\2713  ';
+  color: var(--grocery-green);
+}
+
+main .accordion.recipes .accordion-item-body li a:any-link {
+  color: var(--grocery-green-dark);
+}
+
+@keyframes grocery-recipe-open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (min-width: 900px) {
+  main .accordion.recipes details .accordion-item-body,
+  main .accordion.recipes details[open] .accordion-item-body {
+    grid-template-columns: 220px 1fr;
+    align-items: start;
+    align-content: start;
+  }
+
+  main .accordion.recipes .accordion-item-body > p:first-child {
+    grid-row: 1 / span 5;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main .accordion.recipes details[open] .accordion-item-body {
+    animation: none;
+  }
+
+  main .accordion.recipes details summary::after {
+    transition: none;
+  }
+}

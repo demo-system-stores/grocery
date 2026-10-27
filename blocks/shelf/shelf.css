@@ -1,0 +1,172 @@
+.shelf {
+  --shelf-wood: #b07a45;
+  --shelf-wood-dark: #7d5229;
+  --shelf-tag: #ffe082;
+  --shelf-text: #1b5e20;
+  --shelf-edge-width: 40px;
+
+  position: relative;
+}
+
+.shelf > ul {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(150px, 44%);
+  margin: 0;
+  padding: 8px 0 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.shelf > ul::-webkit-scrollbar {
+  display: none;
+}
+
+.shelf > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+}
+
+.shelf .shelf-item-image {
+  width: 100%;
+  border-bottom: 14px solid var(--shelf-wood);
+  box-shadow: 0 10px 12px -8px rgb(0 0 0 / 35%);
+}
+
+.shelf .shelf-item-image::after {
+  content: '';
+  display: block;
+  height: 4px;
+  margin-bottom: -18px;
+  background-color: var(--shelf-wood-dark);
+}
+
+.shelf .shelf-item-image img {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 16px 20px 6px;
+  object-fit: contain;
+  transform-origin: bottom center;
+  transition: transform 0.25s ease;
+}
+
+.shelf > ul > li:hover img,
+.shelf > ul > li:focus-within img {
+  transform: translateY(-10px) rotate(-3deg) scale(1.05);
+}
+
+.shelf .shelf-item-body {
+  margin: 22px 8px 8px;
+  text-align: center;
+}
+
+.shelf .shelf-item-body p {
+  margin: 0;
+}
+
+.shelf .shelf-item-body p:first-child {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 6px 12px 6px 22px;
+  border-radius: 4px;
+  background-color: var(--shelf-tag);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 12%);
+  font: var(--type-body-2-strong-font);
+  color: var(--shelf-text);
+}
+
+.shelf .shelf-item-body p:first-child::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #fff;
+  transform: translateY(-50%);
+}
+
+.shelf .shelf-item-body a:any-link {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: var(--type-body-2-strong-font);
+  color: var(--shelf-text);
+  text-decoration: none;
+}
+
+.shelf .shelf-item-body a:any-link::after {
+  content: ' \2192';
+}
+
+.shelf .shelf-item-body a:hover,
+.shelf .shelf-item-body a:focus-visible {
+  text-decoration: underline;
+}
+
+.shelf::before,
+.shelf::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: var(--shelf-edge-width);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.shelf::before {
+  left: 0;
+  background-image: linear-gradient(to right, #fff 20%, rgb(255 255 255 / 0%));
+}
+
+.shelf::after {
+  right: 0;
+  background-image: linear-gradient(to left, #fff 20%, rgb(255 255 255 / 0%));
+}
+
+.shelf.shelf-can-scroll-left::before,
+.shelf.shelf-can-scroll-right::after {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* the pointer drives the scroll, so snapping would fight it */
+  .shelf > ul {
+    scroll-snap-type: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .shelf {
+    --shelf-edge-width: 72px;
+  }
+
+  .shelf > ul {
+    grid-auto-columns: calc(100% / 4.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf .shelf-item-image img,
+  .shelf::before,
+  .shelf::after {
+    transition: none;
+  }
+
+  .shelf > ul > li:hover img,
+  .shelf > ul > li:focus-within img {
+    transform: none;
+  }
+}
